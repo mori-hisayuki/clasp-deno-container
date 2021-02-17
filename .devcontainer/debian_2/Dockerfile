@@ -41,14 +41,14 @@ COPY --chown=${GROUP_NAME}:${USER_NAME} ./ssh /home/${USER_NAME}/.ssh
 # common tools
 RUN set -x \
     && apt-get -y update \
-    && apt-get -y upgrade \
     && apt-get install -y \
-    git \
     curl \
+    git \
     openssh-client \
     jq \
     unzip \
-    wget
+    wget \
+ && apt-get clean && rm -rf /var/cache/apt/archives/* /var/lib/apt/lists/*
 
 # Deno install
 RUN set -x \
