@@ -38,18 +38,31 @@ RUN set -x \
 
 COPY --chown=${GROUP_NAME}:${USER_NAME} ./ssh /home/${USER_NAME}/.ssh
 
-RUN apt-get -y update \
+# common tools
+RUN set -x \
+    && apt-get -y update \
     && apt-get -y upgrade \
-    && apt-get install -y git curl openssh-client sudo jq unzip wget
+    && apt-get install -y \
+    git \
+    curl \
+    openssh-client \
+    jq \
+    unzip \
+    wget
+
+# Deno install
+RUN set -x \
+    && curl -fsSL -o /deno.zip "https://github.com/denoland/deno/releases/download/v${DENO_VERSION}/deno-x86_64-unknown-linux-gnu.zip" \
+    && unzip -d /usr/local/bin/ /deno.zip \
+    && rm -f /deno.zip \
+    && /usr/local/bin/deno completions bash > /etc/bash_completion.d/deno
 
 USER ${USER_NAME}
 RUN mkdir /home/${USER_NAME}/${WORK_DIR}
 WORKDIR /home/${USER_NAME}/${WORK_DIR}
-# Deno install
-RUN curl -fsSL https://deno.land/x/install/install.sh | sh
 
-ENV DENO_INSTALL /home/vscode/.deno
-ENV PATH=$DENO_INSTALL/bin:$PATH
+# ENV DENO_INSTALL /home/vscode/.deno
+# ENV PATH=$DENO_INSTALL/bin:$PATH
 
 # vscode setting copy
 COPY --chown=${GROUP_NAME}:${USER_NAME} ./.vscode /home/${USER_NAME}/${WORK_DIR}/.vscode
