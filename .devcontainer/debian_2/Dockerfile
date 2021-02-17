@@ -7,6 +7,13 @@ ARG GROUP_NAME
 ARG WORK_DIR
 ARG DENO_VERSION
 
+# CA の証明書のパッケージ
+RUN set -x \
+    && apt-get update \
+    && apt-get install -y --no-install-recommends \
+        ca-certificates \
+    && apt-get clean && rm -rf /var/cache/apt/archives/* /var/lib/apt/lists
+
 # Install sudo
 RUN set -x \
     && apt-get -y update \
@@ -41,7 +48,7 @@ COPY --chown=${GROUP_NAME}:${USER_NAME} ./ssh /home/${USER_NAME}/.ssh
 # common tools
 RUN set -x \
     && apt-get -y update \
-    && apt-get install -y \
+    && apt-get install -y --no-install-recommends \
     curl \
     git \
     openssh-client \
