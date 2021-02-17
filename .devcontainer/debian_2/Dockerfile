@@ -4,6 +4,7 @@ ARG USER_ID
 ARG USER_NAME
 ARG GROUP_ID
 ARG GROUP_NAME
+ARG WORK_DIR
 ARG DENO_VERSION
 
 # Install sudo
@@ -42,8 +43,13 @@ RUN apt-get -y update \
     && apt-get install -y git curl openssh-client sudo jq unzip wget
 
 USER ${USER_NAME}
+RUN mkdir /home/${USER_NAME}/${WORK_DIR}
+WORKDIR /home/${USER_NAME}/${WORK_DIR}
 # Deno install
 RUN curl -fsSL https://deno.land/x/install/install.sh | sh
+
+ENV DENO_INSTALL /home/vscode/.deno
+ENV PATH=$DENO_INSTALL/bin:$PATH
 
 # vscode setting copy
 COPY --chown=${GROUP_NAME}:${USER_NAME} ./.vscode /home/${USER_NAME}/${WORK_DIR}/.vscode
