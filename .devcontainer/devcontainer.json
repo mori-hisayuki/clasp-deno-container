@@ -33,5 +33,5 @@
 	],
 
 	// remote接続先でのuser
-	// "remoteUser": "vscode"
+	"remoteUser": "vscode"
 }

@@ -41,5 +41,9 @@ RUN apt-get -y update \
     && apt-get -y upgrade \
     && apt-get install -y git curl openssh-client sudo jq unzip wget
 
+USER ${USER_NAME}
 # Deno install
 RUN curl -fsSL https://deno.land/x/install/install.sh | sh
+
+# vscode setting copy
+COPY --chown=${GROUP_NAME}:${USER_NAME} ./.vscode /home/${USER_NAME}/${WORK_DIR}/.vscode
