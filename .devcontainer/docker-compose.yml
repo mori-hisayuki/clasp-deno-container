@@ -3,7 +3,7 @@ services:
   main:
     build:
       context: .
-      dockerfile: ./debian_2/Dockerfile
+      dockerfile: ./debian/Dockerfile
       args:
         USER_ID: 1000
         USER_NAME: vscode
