@@ -9,7 +9,7 @@
 	"service": "main",
 
 	// remote接続先のworkspaseディレクトリ
-	"workspaceFolder": "/home/vscode/develop",
+	"workspaceFolder": "/home",
 
 	// Set *default* container specific settings.json values on container create.
 	"settings": {
@@ -33,5 +33,5 @@
 	],
 
 	// remote接続先でのuser
-	"remoteUser": "vscode"
+	// "remoteUser": "vscode"
 }

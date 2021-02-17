@@ -3,18 +3,20 @@ services:
   main:
     build:
       context: .
-      dockerfile: ./alpine/Dockerfile
+      dockerfile: ./debian_2/Dockerfile
       args:
+        USER_ID: 1000
         USER_NAME: vscode
+        GROUP_ID: 1000
         GROUP_NAME: vscode
-        USER_UID: 1000
-        USER_GID: 1000
         WORK_DIR: develop
+        DENO_VERSION: 1.7.4
     env_file: devcontainer.env
     environment:
       - TZ=JST-9
     ports:
       - 80:80
+      - 8080:8080
     volumes:
-      - ~/.ssh:/home/vscode/.ssh
+      - ~/.aws:/home/vscode/.aws
     command: /bin/sh -c "while sleep 1000; do :; done"
